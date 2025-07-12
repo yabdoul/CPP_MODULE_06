@@ -1,8 +1,17 @@
 #include  "Converter.hpp"   
 #include <iostream> 
 #include <iomanip>  
-
+#include <limits>
  
+
+Converter::Converter(Converter &C )
+{ 
+  (void)  C ;     
+}   
+Converter Converter::operator=(Converter &C)  
+{ 
+     (void)  C ;  
+} ;     
 
 bool  Converter::fullDegit(std::string  _value ) 
 { 
@@ -14,21 +23,22 @@ bool  Converter::fullDegit(std::string  _value )
     return true  ;   
 }
 int  Converter::typeGet(std::string _value  ) 
-{ 
-    if(_value.length()  == 1  &&  !isdigit(_value[0]) )  
+{   
+   if(_value == "nan" or _value == "nanf")  
+    return NAN ;   
+   if(_value.length()  == 1  &&  !isdigit(_value[0]) )  
         {  
             return CHAR  ;    
         } ;   
    if(Converter::fullDegit(_value)) 
         return INT ;     
-    if(_value.find('.'))
-    { 
+    if(_value.find('.') != std::string::npos )
+    {   
         if( (_value.back() == 'f') ||  ( _value  ==  "-inff")  || (_value  ==  "+inff") ) 
              return FLOAT   ;    
         else if(!(_value.back() == 'f') || (_value ==  "-inf") |  (_value ==  "+inf"))  
             return DOUBLE ;    
     }  
-    
    throw Converter::typeNotFoundException() ;    
 } ;   
 
@@ -45,7 +55,8 @@ void Converter::convert_char(std::string _char )
 } ;    
 
 void Converter::convert_int(std::string _int )  
-{  
+{    
+    
     std::cout << std::fixed << std::setprecision(1); 
     (atoi(_int.c_str())>= 32 &&  atoi(_int.c_str()) <= 126 )?
     (std::cout<<"CHAR   :"<< static_cast<char> (atoi(_int.c_str()))<<std::endl ): 
@@ -75,8 +86,15 @@ void  Converter::convert_double(std::string _float  )
     std::cout<<"DOUBLE  :"<<atof(_float.c_str()) <<std::endl ;    
 }  ;  
 
+void Converter::convertNans(std::string _NAN  ) 
+{ 
+  std::cout<<"CHAR  :impossible"<<std::endl  ;  
+  std::cout<<"INT   :impossible"<<std::endl ;   
+  std::cout<<"FLOAT :"<<_NAN +'f'<<std::endl ;  
+    std::cout<<"DOUBLE  :"<<_NAN<<std::endl ;    
+} ;  
 void Converter::handle_convert(std::string _value  ) 
 {  
-   void (*funcArray[4])(std::string) = { convert_char , convert_int , convert_double ,  convert_float  }  ;    
+   void (*funcArray[5])(std::string) = { convert_char , convert_int , convert_double ,  convert_float   ,  convertNans}  ;    
    funcArray[typeGet(_value)](_value) ;  
 }
