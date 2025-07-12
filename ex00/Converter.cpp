@@ -65,6 +65,15 @@ void  Converter::convert_float(std::string _float  )
     std::cout<<"DOUBLE  :"<<atof(_float.c_str()) <<std::endl ;    
 }  ;  
 
+void  Converter::convert_double(std::string _float  )  
+{ 
+  (((atof(_float.c_str())  -   (static_cast <int>  (atof(_float.c_str()))  )) == 0 )  ||  (atoi(_float.c_str())< 32 &&  atoi(_float.c_str()) > 126 ))?
+    (std::cout<<"CHAR   :"<< static_cast<char> (atoi(_float.c_str()))<<std::endl ): 
+    (std::cout<<"CHAR   :"<<"Non displayable"<<std::endl  ) ;  
+    std::cout << std::fixed << std::setprecision(1);  
+    std::cout<<"FLOAT   :"<<atof(_float.c_str()) <<"f"<<std::endl ;   
+    std::cout<<"DOUBLE  :"<<atof(_float.c_str()) <<std::endl ;    
+}  ;  
 
 void Converter::handle_convert(std::string _value  ) 
 {  

@@ -21,7 +21,7 @@ class Converter
       static bool fullDegit(std::string _value )  ;  
       static void  convert_char(std::string _char ) ;  
       static void  convert_int(std::string _int )   ;   
-      static void  convert_double(std::string _double){} ;  
+      static void  convert_double(std::string _double)  ;  
       static void  convert_float(std::string _float )   ;    
       static void handle_convert(std::string _value  )   ;        
 
